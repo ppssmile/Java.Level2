@@ -12,22 +12,37 @@ public class Main {
         }
         s[3][2] = "sadf"+5;
         exceptionTest(s);
+        System.out.println("Максим, я услышал Ваше замечание на последнем вебинаре и принял к сведению.\n" +
+                "Мной прилагаются максимальные усилия, чтобы ретироваться.\n" +
+                "Примите мои извинения, как ученика к преподователю...");
 
 
     }
-    protected static void exceptionTest(String[][] arr) throws RuntimeException{
+    protected static void exceptionTest(String[][] arr){
+        int counter = 0;
         try {
-            if (arr.length!=4 &arr[0].length!=4 & arr.equals(null)) throw new MyArraySizeException();
-            int counter = 0;
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 4; j++) {
+            if (arr.length!=4 || arr[0].length!=4 || arr.equals(null)) throw new MyArraySizeException("\n                               " +
+                    "Подайте массив размером 4х4, вместо поданного: " + arr.length+"x"+arr[0].length);
+        }catch (MyArraySizeException e){
+            System.out.println(e.toString()+"\n\n");
+        }
+        int a = 0;
+        int b = 0;
+        try {
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[0].length; j++) {
+                    a=i;
+                    b=j;
                     counter += Integer.parseInt(arr[i][j]);
                 }
             }
-        }catch (MyArraySizeException e){
-            e.printStackTrace();
-        }catch (NumberFormatException b){
-            throw new MyArrayDateException();
+        }catch (NumberFormatException e){
+            try {
+                throw new MyArrayDateException("\n                               " +
+                        "arr["+a+"]"+"["+b+"] = " + arr[a][b], e);
+            }catch (MyArrayDateException d){
+                System.out.println(d.toString()+"\ncounter = "+ counter +  "\n");
+            }
         }
     }
 }
