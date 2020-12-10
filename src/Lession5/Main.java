@@ -26,15 +26,26 @@ public class Main{
         for (int i = 0; i < SIZE; i++) {
             arr[i] = 1;
         }
-        TestThread testThread1 = new TestThread(H);
-        TestThread testThread2 = new TestThread(H);
+        TestThread testThread1 = new TestThread(H,"1");
+        TestThread testThread2 = new TestThread(H, "2");
         long a = System.currentTimeMillis();
         System.arraycopy(arr,0,testThread1.arr, 0, H);
         System.arraycopy(arr,H,testThread2.arr, 0, H);
-        new Thread(testThread1).start();
-        new Thread(testThread2).start();
+        testThread1.t.start();
+        try {
+            testThread1.t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        testThread2.t.start();
+        try {
+            testThread2.t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.arraycopy(testThread1.arr, 0, arr,0,H);
         System.arraycopy(testThread2.arr,0,arr,H,H);
         System.out.println(System.currentTimeMillis()-a);
+        System.out.println("Dot to exit " + Thread.currentThread().getName());
     }
 }
