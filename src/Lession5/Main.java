@@ -46,6 +46,6 @@ public class Main{
         System.arraycopy(testThread1.arr, 0, arr,0,H);
         System.arraycopy(testThread2.arr,0,arr,H,H);
         System.out.println(System.currentTimeMillis()-a);
-        System.out.println("Dot to exit " + Thread.currentThread().getName());
+//        System.out.println("Dot to exit " + Thread.currentThread().getName());
     }
 }
